@@ -1,5 +1,5 @@
 {
-  "name": "supply-api",
+  "name": "api-supply",
   "version": "0.1.0",
   "private": true,
   "description": "A Strapi application",
@@ -15,9 +15,9 @@
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.29.0",
-    "@strapi/plugin-users-permissions": "5.29.0",
-    "@strapi/strapi": "5.29.0",
+    "@strapi/plugin-cloud": "5.30.1",
+    "@strapi/plugin-users-permissions": "5.30.1",
+    "@strapi/strapi": "5.30.1",
     "better-sqlite3": "11.3.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -35,7 +35,7 @@
     "npm": ">=6.0.0"
   },
   "strapi": {
-    "uuid": "57a3f6c1-63d8-474b-9fd4-cecda97e3ba6",
-    "installId": "e5f5db3d4a9760c4ed00ea6566744843a1277d333335d0c98a739a82d28a39cd"
+    "uuid": "a31d3158-58e7-4d2c-9003-3794709f5198",
+    "installId": "28115d6cf769ce371bf9788a9d7d800a07bc23a11dc62d0d052b2cd06049f526"
   }
 }
