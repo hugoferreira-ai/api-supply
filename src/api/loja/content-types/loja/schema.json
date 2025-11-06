@@ -24,10 +24,10 @@
     "telefone": {
       "type": "string"
     },
-    "cliente": {
+    "user": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::cliente.cliente",
+      "target": "plugin::users-permissions.user",
       "inversedBy": "lojas"
     }
   }

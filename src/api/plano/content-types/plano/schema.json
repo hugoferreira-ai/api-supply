@@ -26,10 +26,10 @@
     "descricao": {
       "type": "string"
     },
-    "clientes": {
+    "users": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::cliente.cliente",
+      "target": "plugin::users-permissions.user",
       "mappedBy": "plano"
     }
   }

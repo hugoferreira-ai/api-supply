@@ -467,40 +467,6 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiClienteCliente extends Struct.CollectionTypeSchema {
-  collectionName: 'clientes';
-  info: {
-    displayName: 'Cliente';
-    pluralName: 'clientes';
-    singularName: 'cliente';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    email: Schema.Attribute.Email &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::cliente.cliente'
-    > &
-      Schema.Attribute.Private;
-    lojas: Schema.Attribute.Relation<'oneToMany', 'api::loja.loja'>;
-    nome: Schema.Attribute.String & Schema.Attribute.Required;
-    plano: Schema.Attribute.Relation<'manyToOne', 'api::plano.plano'>;
-    publishedAt: Schema.Attribute.DateTime;
-    telefone: Schema.Attribute.String;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiLojaLoja extends Struct.CollectionTypeSchema {
   collectionName: 'lojas';
   info: {
@@ -512,7 +478,6 @@ export interface ApiLojaLoja extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    cliente: Schema.Attribute.Relation<'manyToOne', 'api::cliente.cliente'>;
     cnpj: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -527,6 +492,10 @@ export interface ApiLojaLoja extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -541,7 +510,6 @@ export interface ApiPlanoPlano extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    clientes: Schema.Attribute.Relation<'oneToMany', 'api::cliente.cliente'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -556,6 +524,10 @@ export interface ApiPlanoPlano extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    users: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -1014,7 +986,6 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -1034,11 +1005,13 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
+    lojas: Schema.Attribute.Relation<'oneToMany', 'api::loja.loja'>;
     password: Schema.Attribute.Password &
       Schema.Attribute.Private &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    plano: Schema.Attribute.Relation<'manyToOne', 'api::plano.plano'>;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
@@ -1046,6 +1019,7 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    telefone: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1070,7 +1044,6 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::cliente.cliente': ApiClienteCliente;
       'api::loja.loja': ApiLojaLoja;
       'api::plano.plano': ApiPlanoPlano;
       'plugin::content-releases.release': PluginContentReleasesRelease;
