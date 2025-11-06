@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "planos",
+  "info": {
+    "singularName": "plano",
+    "pluralName": "planos",
+    "displayName": "Plano"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nome": {
+      "type": "string",
+      "required": true
+    },
+    "limiteLojas": {
+      "type": "integer",
+      "required": true
+    },
+    "preco": {
+      "type": "decimal",
+      "required": true
+    },
+    "descricao": {
+      "type": "string"
+    }
+  }
+}
