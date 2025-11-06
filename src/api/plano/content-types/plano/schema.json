@@ -25,6 +25,12 @@
     },
     "descricao": {
       "type": "string"
+    },
+    "clientes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cliente.cliente",
+      "mappedBy": "plano"
     }
   }
 }

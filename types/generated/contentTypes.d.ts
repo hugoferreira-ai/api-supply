@@ -490,6 +490,37 @@ export interface ApiClienteCliente extends Struct.CollectionTypeSchema {
       'api::cliente.cliente'
     > &
       Schema.Attribute.Private;
+    lojas: Schema.Attribute.Relation<'oneToMany', 'api::loja.loja'>;
+    nome: Schema.Attribute.String & Schema.Attribute.Required;
+    plano: Schema.Attribute.Relation<'manyToOne', 'api::plano.plano'>;
+    publishedAt: Schema.Attribute.DateTime;
+    telefone: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiLojaLoja extends Struct.CollectionTypeSchema {
+  collectionName: 'lojas';
+  info: {
+    displayName: 'Loja';
+    pluralName: 'lojas';
+    singularName: 'loja';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    cliente: Schema.Attribute.Relation<'manyToOne', 'api::cliente.cliente'>;
+    cnpj: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    endereco: Schema.Attribute.JSON;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::loja.loja'> &
+      Schema.Attribute.Private;
     nome: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     telefone: Schema.Attribute.String;
@@ -510,6 +541,7 @@ export interface ApiPlanoPlano extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    clientes: Schema.Attribute.Relation<'oneToMany', 'api::cliente.cliente'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1039,6 +1071,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::cliente.cliente': ApiClienteCliente;
+      'api::loja.loja': ApiLojaLoja;
       'api::plano.plano': ApiPlanoPlano;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

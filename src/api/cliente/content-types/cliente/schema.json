@@ -22,6 +22,18 @@
     },
     "telefone": {
       "type": "string"
+    },
+    "plano": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::plano.plano",
+      "inversedBy": "clientes"
+    },
+    "lojas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::loja.loja",
+      "mappedBy": "cliente"
     }
   }
 }
