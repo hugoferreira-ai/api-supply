@@ -467,6 +467,80 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCategoriaCategoria extends Struct.CollectionTypeSchema {
+  collectionName: 'categorias';
+  info: {
+    displayName: 'Categoria';
+    pluralName: 'categorias';
+    singularName: 'categoria';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    codigo: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    descricao: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::categoria.categoria'
+    > &
+      Schema.Attribute.Private;
+    nome: Schema.Attribute.String & Schema.Attribute.Required;
+    padrao: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    produtos: Schema.Attribute.Relation<'oneToMany', 'api::produto.produto'>;
+    publishedAt: Schema.Attribute.DateTime;
+    subcategorias: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::subcategoria.subcategoria'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiEstoqueEstoque extends Struct.CollectionTypeSchema {
+  collectionName: 'estoques';
+  info: {
+    displayName: 'Estoque';
+    pluralName: 'estoques';
+    singularName: 'estoque';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::estoque.estoque'
+    > &
+      Schema.Attribute.Private;
+    loja: Schema.Attribute.Relation<'manyToOne', 'api::loja.loja'>;
+    produto: Schema.Attribute.Relation<'manyToOne', 'api::produto.produto'>;
+    publishedAt: Schema.Attribute.DateTime;
+    quantidade: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiLojaLoja extends Struct.CollectionTypeSchema {
   collectionName: 'lojas';
   info: {
@@ -483,6 +557,7 @@ export interface ApiLojaLoja extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     endereco: Schema.Attribute.JSON;
+    estoques: Schema.Attribute.Relation<'oneToMany', 'api::estoque.estoque'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::loja.loja'> &
       Schema.Attribute.Private;
@@ -528,6 +603,121 @@ export interface ApiPlanoPlano extends Struct.CollectionTypeSchema {
       'oneToMany',
       'plugin::users-permissions.user'
     >;
+  };
+}
+
+export interface ApiProdutoProduto extends Struct.CollectionTypeSchema {
+  collectionName: 'produtos';
+  info: {
+    displayName: 'Produto';
+    pluralName: 'produtos';
+    singularName: 'produto';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    ativo: Schema.Attribute.Boolean;
+    categoria: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::categoria.categoria'
+    >;
+    codigoBarra: Schema.Attribute.Integer;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    descricao: Schema.Attribute.String;
+    estoques: Schema.Attribute.Relation<'oneToMany', 'api::estoque.estoque'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::produto.produto'
+    > &
+      Schema.Attribute.Private;
+    margemLucro: Schema.Attribute.Decimal;
+    ncm: Schema.Attribute.String;
+    precoCusto: Schema.Attribute.Decimal;
+    prevoVenda: Schema.Attribute.Decimal;
+    publishedAt: Schema.Attribute.DateTime;
+    subcategoria: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::subcategoria.subcategoria'
+    >;
+    unidade_medida: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::unidade-medida.unidade-medida'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSubcategoriaSubcategoria
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'subcategorias';
+  info: {
+    displayName: 'Subcategoria';
+    pluralName: 'subcategorias';
+    singularName: 'subcategoria';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    categoria: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::categoria.categoria'
+    >;
+    codigo: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    descricao: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::subcategoria.subcategoria'
+    > &
+      Schema.Attribute.Private;
+    nome: Schema.Attribute.String & Schema.Attribute.Required;
+    padrao: Schema.Attribute.Boolean;
+    produtos: Schema.Attribute.Relation<'oneToMany', 'api::produto.produto'>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiUnidadeMedidaUnidadeMedida
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'unidade_medidas';
+  info: {
+    displayName: 'UnidadeMedida';
+    pluralName: 'unidade-medidas';
+    singularName: 'unidade-medida';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::unidade-medida.unidade-medida'
+    > &
+      Schema.Attribute.Private;
+    nome: Schema.Attribute.String;
+    produtos: Schema.Attribute.Relation<'oneToMany', 'api::produto.produto'>;
+    publishedAt: Schema.Attribute.DateTime;
+    sigla: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1044,8 +1234,13 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::categoria.categoria': ApiCategoriaCategoria;
+      'api::estoque.estoque': ApiEstoqueEstoque;
       'api::loja.loja': ApiLojaLoja;
       'api::plano.plano': ApiPlanoPlano;
+      'api::produto.produto': ApiProdutoProduto;
+      'api::subcategoria.subcategoria': ApiSubcategoriaSubcategoria;
+      'api::unidade-medida.unidade-medida': ApiUnidadeMedidaUnidadeMedida;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

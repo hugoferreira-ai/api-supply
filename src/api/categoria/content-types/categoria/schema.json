@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "categorias",
+  "info": {
+    "singularName": "categoria",
+    "pluralName": "categorias",
+    "displayName": "Categoria"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nome": {
+      "type": "string",
+      "required": true
+    },
+    "codigo": {
+      "type": "string",
+      "required": true
+    },
+    "descricao": {
+      "type": "string"
+    },
+    "padrao": {
+      "type": "boolean",
+      "default": false
+    },
+    "subcategorias": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::subcategoria.subcategoria",
+      "mappedBy": "categoria"
+    },
+    "produtos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::produto.produto",
+      "mappedBy": "categoria"
+    }
+  }
+}

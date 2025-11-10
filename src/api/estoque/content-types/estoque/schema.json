@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "estoques",
+  "info": {
+    "singularName": "estoque",
+    "pluralName": "estoques",
+    "displayName": "Estoque"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "produto": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::produto.produto"
+    },
+    "loja": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::loja.loja"
+    },
+    "quantidade": {
+      "type": "integer",
+      "required": true,
+      "default": 0,
+      "min": 0
+    }
+  }
+}
+
