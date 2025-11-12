@@ -1210,6 +1210,7 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.role'
     >;
     telefone: Schema.Attribute.String;
+    tipoUsuario: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

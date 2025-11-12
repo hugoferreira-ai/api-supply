@@ -80,6 +80,10 @@
       "relation": "oneToMany",
       "target": "api::loja.loja",
       "mappedBy": "user"
+    },
+    "tipoUsuario": {
+      "type": "string",
+      "required": true
     }
   }
 }
